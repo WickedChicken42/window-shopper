@@ -13,7 +13,9 @@ class MainVC: UIViewController {
     
     @IBOutlet var wageTxt: CurrencyTextField!
     @IBOutlet var priceTxt: CurrencyTextField!
-   
+    @IBOutlet var resultLbl: UILabel!
+    @IBOutlet var hoursLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,12 +31,34 @@ class MainVC: UIViewController {
         // Added the new calcBtn to the input view (the keyboard)
         wageTxt.inputAccessoryView = calcBtn
         priceTxt.inputAccessoryView = calcBtn
+
+        // Intially hide the labels
+        resultLbl.isHidden = true
+        hoursLbl.isHidden = true
+
     }
     
     @objc func calculate() {
-        print("We got here!")
+
+        if let wageValue = wageTxt.text, let priceValue = priceTxt.text {
+            if let wage = Double(wageValue), let price = Double(priceValue) {
+                view.endEditing(true)
+                resultLbl.isHidden = false
+                hoursLbl.isHidden = false
+                
+                //resultLbl.text = String(Wage.getHours(forWage: wage, andPrice: price))
+                resultLbl.text = "\(Wage.getHours(forWage: wage, andPrice: price))"
+            }
+        }
     }
-  
+
+    @IBAction func clearCalculatorPressed(_ sender: Any) {
+        resultLbl.isHidden = true
+        hoursLbl.isHidden = true
+        wageTxt.text = ""
+        priceTxt.text = ""
+    }
+
 
 }
 
