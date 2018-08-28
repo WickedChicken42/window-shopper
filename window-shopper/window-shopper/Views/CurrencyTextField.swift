@@ -29,6 +29,7 @@ class CurrencyTextField: UITextField {
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.25)
         layer.cornerRadius = 5.0
         textAlignment = .center
+        // Added to ensure we retain rounded corners since we used the Draw func
         clipsToBounds = true
 
         // setting the text to be white
@@ -41,6 +42,7 @@ class CurrencyTextField: UITextField {
 
     }
     
+    // Performing the Draw manually so that we can add the users current locale currency symbol.
     override func draw(_ rect: CGRect) {
         let size: CGFloat = 20
         let currencyLbl = UILabel(frame: CGRect(x: 5, y: (frame.size.height / 2) - size / 2, width: size, height: size))
@@ -48,8 +50,10 @@ class CurrencyTextField: UITextField {
         currencyLbl.textAlignment = .center
         currencyLbl.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         currencyLbl.layer.cornerRadius = 5.0
+        // Added to ensure we retain rounded corners
         currencyLbl.clipsToBounds = true
         
+        // Create and add the Formatter to the custom text field so that it will display the users currency symbol based on their current locale.
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = .current
